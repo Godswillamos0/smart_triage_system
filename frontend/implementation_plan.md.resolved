@@ -1,0 +1,45 @@
+# Goal Description
+Build a modern, responsive frontend for the Smart Triage System using Next.js (App Router), Tailwind CSS, and Shadcn UI.
+The application will consist of a public ticket submission page for customers, and a protected agent dashboard for managing tickets with optimistic UI updates.
+
+## Proposed Changes
+
+### Setup and Scaffolding
+- Initialize Next.js 14+ application with App Router, TypeScript, Tailwind CSS, and ESLint in the `frontend` directory.
+- Setup Shadcn UI components (button, input, form, select, table, badge, toast, tabs/kanban).
+
+### API Integration and State
+- Create `lib/api.ts` representing the client for the OpenAPI spec.
+- Implemented fetching logic directly using fetch API or an SWR/React Query approach for caching and optimistic updates.
+- Setup an Auth Context (`components/providers/auth-provider.tsx`) or similar state management to hold the `access_token` and `user_id`, protected via strictly checked routes or middleware.
+
+### Frontend Routing and Pages
+#### Public Routes
+- **`/`**: Landing/Customer Submission Page
+  - Uses a Shadcn form schema (Zod) matching `CreateTicketRequest` (`title`, `description`).
+  - Calls `POST /api/v1/customer/ticket`.
+  - Shows success toast on submission.
+- **`/login`**: Agent Login Page
+  - Calls `POST /api/v1/auth/login`.
+  - Redirects to `/dashboard` on success.
+- **`/register`**: Agent Registration
+  - Calls `POST /api/v1/auth/register`.
+- **`/verify`**: OTP Verification
+  - Calls `POST /api/v1/auth/send-verification-otp` and `POST /api/v1/auth/verify-otp`.
+
+#### Protected Routes (Agent)
+- **`/dashboard`**: Kanban / Data Table of Tickets
+  - Calls `GET /api/v1/ticket/ticket` with pagination/filtering.
+  - UI for tickets, showing `title`, `description`, `status`, `priority`, `category`.
+  - Includes a dropdown/status select per ticket. Changes to status trigger an optimistic ui update for `PATCH /api/v1/ticket/ticket/{ticket_id}` using `TicketStatusRequest`.
+
+### Styling & Interactivity
+- Create a modern, dark-mode supported dashboard with glassmorphism or sleek minimalist aesthetics.
+- Animations on ticket open/close, drag-and-drop or simple instant status toggle with toast feedback.
+
+## Verification Plan
+### Manual Verification
+- Verify that a customer can submit a ticket from the landing page.
+- Verify that an agent can register, login, and potentially verify their email (if necessary for login).
+- Verify the agent dashboard loads tickets.
+- Verify updating a ticket status works and reflects instantly in the UI (optimistic update).

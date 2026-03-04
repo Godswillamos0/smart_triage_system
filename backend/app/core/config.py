@@ -1,0 +1,38 @@
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+SQL_DATABASE_URL = os.getenv("SQL_DATABASE_URL", "sqlite:///./test.db")
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
+REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", 7))
+OTP_EXPIRE_MINUTES = int(os.getenv("OTP_EXPIRE_MINUTES", 5))
+
+## SMTP Email Configuration
+ZOHO_EMAIL = os.getenv("ZOHO_MAIL")
+ZOHO_SMTP_PASSWORD = os.getenv("ZOHO_PASSWORD")
+ZOHO_SMTP_PORT = int(os.getenv("ZOHO_SMTP_PORT", 465))
+ZOHO_SMTP_HOST = os.getenv("ZOHO_SMTP_HOST", "smtp.zoho.com")
+
+MAIL_TLS = True
+MAIL_SSL = False
+USE_CREDENTIALS = True
+VALIDATE_CERTS = True
+
+## SENDPULSE API Email Configuration
+
+SENDPULSE_API_ID = os.getenv("SENDPULSE_API_ID")
+SENDPULSE_API_SECRET = os.getenv("SENDPULSE_API_SECRET")
+SENDPULSE_SENDER_NAME = os.getenv("SENDPULSE_SENDER_NAME")
+SENDPULSE_SENDER_EMAIL = os.getenv("SENDPULSE_SENDER_EMAIL")
+
+
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
