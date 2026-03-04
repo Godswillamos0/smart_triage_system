@@ -27,7 +27,13 @@ from typing import Annotated, Literal
 from app.utils.redis_config import set_key, get_key, delete_key
 
 
-pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["argon2"],
+    deprecated="auto",
+    argon2__memory_cost=16384,   # 16 MB (default is 65536 = 64 MB)
+    argon2__time_cost=3,
+    argon2__parallelism=2,
+)
 oauth2_scheme =  HTTPBearer(description="Type your token, DO not type Bearer")
 
 SECRET_KEY = SECRET_KEY
